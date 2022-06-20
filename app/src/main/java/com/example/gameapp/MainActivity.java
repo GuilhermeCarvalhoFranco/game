@@ -15,8 +15,9 @@ public class MainActivity extends AppCompatActivity {
 
     MediaPlayer mp;
 
-    boolean isPlaying = false;
+    boolean isPlayingTheme = false, isPlayingMenu = false, isPlayingSword = false;
     boolean wasStarted = false;
+    boolean isMenu = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         //handler = new Handler();
 
         layoutLandscape();
+
+        menuSoundtrack();
     }
 
     public void layoutLandscape(){
@@ -36,23 +39,63 @@ public class MainActivity extends AppCompatActivity {
         decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 
+    public void menuSoundtrack(){
+        MediaPlayer mpMenu;
+        mpMenu = MediaPlayer.create(this, R.raw.menu);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(isMenu){
+                    isPlayingMenu = mpMenu.isPlaying();
+
+                    if (!isPlayingMenu){
+                        mpMenu.stop();
+                        mpMenu.start();
+                    }
+                }
+            }
+        }).start();
+    }
     public void startGame(View v){
+        isMenu = false;
         wasStarted = true;
 
-        themeSoundtrack();
+        startSoundtrack();
+    }
+
+    public void startSoundtrack(){
+        MediaPlayer mpSword;
+        mpSword = MediaPlayer.create(this, R.raw.espada);
+
+        mpSword.start();
+        int tempo = mpSword.getDuration();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                themeSoundtrack();
+                try {
+                    Thread.sleep((tempo * 1000));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     public void themeSoundtrack(){
-        mp = MediaPlayer.create(this, R.raw.theme);
+        MediaPlayer mpTheme;
+        mpTheme = MediaPlayer.create(this, R.raw.theme);
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 while(wasStarted){
-                    isPlaying = mp.isPlaying();
+                    isPlayingTheme = mpTheme.isPlaying();
 
-                    if (!isPlaying){
-                        mp.start();
+                    if (!isPlayingTheme){
+                        mpTheme.start();
                     }
                 }
             }
