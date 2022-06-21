@@ -2,15 +2,12 @@ package com.example.gameapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
-import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
-import android.widget.Toast;
-
-import java.io.IOException;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
     //private Handler handler;
@@ -26,14 +23,62 @@ public class MainActivity extends AppCompatActivity {
     MediaPlayer mpSword;
     MediaPlayer mpTheme;
 
+    Button btnStart, btnSair;
+    ImageButton btnMenu;
+
+    FrameLayout frMenu;
+
+    int contMenu = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //handler = new Handler();
+        btnStart = findViewById(R.id.btnStart);
+        btnMenu = findViewById(R.id.btnMenu);
+        btnSair = findViewById(R.id.btnSair);
+        frMenu = findViewById(R.id.frameMenu);
+
+        frMenu.setVisibility(View.INVISIBLE);
+
+
         layoutLandscape();
 
         menu();
+
+        btnStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                start();
+            }
+        });
+
+        btnMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                menuFlutuante();
+            }
+        });
+
+        btnSair.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isMenu){
+                    mpMenu.stop();
+                }
+
+                if(wasStarted){
+                    mpTheme.stop();
+                }
+
+                menu();
+
+                contMenu = 0;
+                frMenu.setVisibility(View.INVISIBLE);
+                btnStart.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     public void layoutLandscape(){
@@ -43,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void menu(){
         isMenu = true;
+        wasStarted = false;
+
 
         menuSoundtrack();
     }
@@ -54,24 +101,30 @@ public class MainActivity extends AppCompatActivity {
         mpMenu.start();
     }
 
-    public void startBtn(View v){
-        isMenu = false;
-        wasStarted = true;
-
-        mpMenu.stop();
-
-        swordSound();
-        startGame();
-    }
-
     public void swordSound(){
         mpSword = MediaPlayer.create(this, R.raw.espada);
 
         mpSword.start();
     }
 
+    public void start(){
+        isMenu = false;
+        wasStarted = true;
+
+        mpMenu.stop();
+
+        swordSound();
+
+        startGame();
+    }
+
+
+
     public void startGame(){
+        btnStart.setVisibility(View.INVISIBLE);
+
         themeSoundtrack();
+
     }
 
 
@@ -80,6 +133,24 @@ public class MainActivity extends AppCompatActivity {
 
         mpTheme.setLooping(wasStarted);
         mpTheme.start();
+    }
+
+    public void menuFlutuante(){
+        swordSound();
+
+        if(contMenu == 0){
+            frMenu.setVisibility(View.VISIBLE);
+
+            btnStart.setVisibility(View.INVISIBLE);
+
+            contMenu = 1;
+        }else{
+            frMenu.setVisibility(View.INVISIBLE);
+
+            btnStart.setVisibility(View.VISIBLE);
+
+            contMenu = 0;
+        }
     }
 
 }
