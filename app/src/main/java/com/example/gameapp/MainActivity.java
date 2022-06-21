@@ -10,60 +10,71 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Toast;
 
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
     //private Handler handler;
 
-    MediaPlayer mp;
+    boolean isPlayingMenuTheme = false;
+    boolean isPlayingTheme = false;
+    boolean isPlayingSword = false;
 
-    boolean isPlayingTheme = false, isPlayingMenu = false, isPlayingSword = false;
-    boolean wasStarted = false;
-    boolean isMenu = true;
+    boolean wasStarted;
+    boolean isMenu;
+
+    MediaPlayer mpMenu;
+    MediaPlayer mpSword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //handler = new Handler();
-
         layoutLandscape();
 
-        menuSoundtrack();
+        menu();
     }
 
     public void layoutLandscape(){
-        int requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
-
-        setRequestedOrientation(requestedOrientation);
-
         View decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 
+    public void menu(){
+        isMenu = true;
+
+        menuSoundtrack();
+    }
+
     public void menuSoundtrack(){
-        MediaPlayer mpMenu;
         mpMenu = MediaPlayer.create(this, R.raw.menu);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(isMenu){
-                    isPlayingMenu = mpMenu.isPlaying();
-
-                    if (!isPlayingMenu){
-                        mpMenu.stop();
-                        mpMenu.start();
-                    }
-                }
-            }
-        }).start();
+        mpMenu.setLooping(isMenu);
+        mpMenu.start();
     }
-    public void startGame(View v){
+
+    public void startBtn(View v){
         isMenu = false;
         wasStarted = true;
 
-        startSoundtrack();
+        mpMenu.stop();
+
+        swordSound();
+        startGame();
     }
 
+    public void swordSound(){
+        mpSword = MediaPlayer.create(this, R.raw.espada);
+
+        mpSword.start();
+    }
+
+    public void startGame(){
+        //startSoundtrack();
+    }
+
+
+/*
     public void startSoundtrack(){
         MediaPlayer mpSword;
         mpSword = MediaPlayer.create(this, R.raw.espada);
@@ -101,5 +112,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
     }
-
+*/
 }
