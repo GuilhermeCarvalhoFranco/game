@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     MediaPlayer mpMenu;
     MediaPlayer mpSword;
+    MediaPlayer mpTheme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,47 +71,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startGame(){
-        //startSoundtrack();
+        themeSoundtrack();
     }
 
-
-/*
-    public void startSoundtrack(){
-        MediaPlayer mpSword;
-        mpSword = MediaPlayer.create(this, R.raw.espada);
-
-        mpSword.start();
-        int tempo = mpSword.getDuration();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                themeSoundtrack();
-                try {
-                    Thread.sleep((tempo * 1000));
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
 
     public void themeSoundtrack(){
-        MediaPlayer mpTheme;
         mpTheme = MediaPlayer.create(this, R.raw.theme);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(wasStarted){
-                    isPlayingTheme = mpTheme.isPlaying();
-
-                    if (!isPlayingTheme){
-                        mpTheme.start();
-                    }
-                }
-            }
-        }).start();
+        mpTheme.setLooping(wasStarted);
+        mpTheme.start();
     }
-*/
+
 }
