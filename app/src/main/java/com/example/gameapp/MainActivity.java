@@ -138,19 +138,32 @@ public class MainActivity extends AppCompatActivity {
     public void menuFlutuante(){
         swordSound();
 
-        if(contMenu == 0){
-            frMenu.setVisibility(View.VISIBLE);
+        if(isMenu) {
+            if (contMenu == 0) {
+                frMenu.setVisibility(View.VISIBLE);
 
-            btnStart.setVisibility(View.INVISIBLE);
+                btnStart.setVisibility(View.INVISIBLE);
 
-            contMenu = 1;
+                contMenu = 1;
+            } else {
+                frMenu.setVisibility(View.INVISIBLE);
+
+                btnStart.setVisibility(View.VISIBLE);
+
+                contMenu = 0;
+            }
         }else{
-            frMenu.setVisibility(View.INVISIBLE);
+            if (contMenu == 0) {
+                frMenu.setVisibility(View.VISIBLE);
 
-            btnStart.setVisibility(View.VISIBLE);
+                contMenu = 1;
+            } else {
+                frMenu.setVisibility(View.INVISIBLE);
 
-            contMenu = 0;
+                contMenu = 0;
+            }
         }
+
     }
 
 }
