@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     boolean isPlayingTheme = false;
     boolean isPlayingSword = false;
     boolean isAnimating = false;
+    boolean isSave = true;
+    boolean isPressed = false;
 
 
     boolean wasStarted;
@@ -69,10 +71,11 @@ public class MainActivity extends AppCompatActivity {
         cl = findViewById(R.id.clGame);
 
 
-
         layoutLandscape();
 
         menu();
+
+
 
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
         btnRight.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                isPressed = true;
+
                 imgSamurai.setImageDrawable(getDrawable(R.drawable.list_corrida));
                 Animatable animation = (AnimationDrawable) imgSamurai.getDrawable();
                 animation.start();
@@ -111,6 +116,13 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }).start();
+                
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP){
+                    imgSamurai.setImageDrawable(getDrawable(R.drawable.list_samurai));
+                    Animatable anime = (AnimationDrawable) imgSamurai.getDrawable();
+                    anime.start();
+                }
+
                 return false;
             }
         });
@@ -118,6 +130,8 @@ public class MainActivity extends AppCompatActivity {
         btnLeft.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                isPressed = true;
+
                 imgSamurai.setImageDrawable(getDrawable(R.drawable.list_corrida));
                 Animatable animation = (AnimationDrawable) imgSamurai.getDrawable();
                 animation.start();
@@ -138,6 +152,13 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }).start();
+
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP){
+                    imgSamurai.setImageDrawable(getDrawable(R.drawable.list_samurai));
+                    Animatable anime = (AnimationDrawable) imgSamurai.getDrawable();
+                    anime.start();
+                }
+
                 return false;
             }
         });
@@ -219,6 +240,8 @@ public class MainActivity extends AppCompatActivity {
             btnStart.setVisibility(View.VISIBLE);
         }
 
+        imgSamurai.setX(startPosition);
+
         menu();
         layoutLandscape();
     }
@@ -235,8 +258,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startGame(){
-        startPosition = imgSamurai.getX();
-
         btnStart.setVisibility(View.INVISIBLE);
 
         themeSoundtrack();
@@ -252,12 +273,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createSamurai(){
-        imgSamurai.setX(startPosition);
         imgSamurai.setVisibility(View.VISIBLE);
         imgSamurai.setImageDrawable(getDrawable(R.drawable.list_samurai));
 
         Animatable animation = (AnimationDrawable) imgSamurai.getDrawable();
         animation.start();
+
+        if(isSave){
+            startPosition = imgSamurai.getX();
+
+            isSave = false;
+        }else{
+            imgSamurai.setX(startPosition);
+        }
     }
 
     public void createButtons(){
