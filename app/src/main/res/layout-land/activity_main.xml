@@ -54,8 +54,8 @@
 
     <Space
         android:id="@+id/space"
-        android:layout_width="729dp"
-        android:layout_height="75dp"
+        android:layout_width="731dp"
+        android:layout_height="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -71,14 +71,14 @@
         app:layout_constraintHorizontal_bias="0.069"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.883" />
+        app:layout_constraintVertical_bias="0.922" />
 
     <Button
         android:id="@+id/btnRight"
         android:layout_width="55dp"
         android:layout_height="54dp"
         android:layout_marginStart="32dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="28dp"
         app:icon="@drawable/ic_baseline_arrow_forward_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnLeft" />

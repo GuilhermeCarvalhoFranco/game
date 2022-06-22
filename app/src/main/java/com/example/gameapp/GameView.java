@@ -7,8 +7,9 @@ import android.view.Surface;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
-public class GameView extends SurfaceView implements Runnable {
+public class GameView extends SurfaceView  implements Runnable {
     private Thread thread;
     private Boolean isPlaying;
     private int screenX, screenY;
@@ -27,11 +28,11 @@ public class GameView extends SurfaceView implements Runnable {
         screenRatioY = 1080f / screenY;
 
         personagem = new Personagem(screenX, getResources());
-
+/*
         btnR.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                if(view.getY() < screenY / 2){
+               if(view.getY() < screenY / 2){
                     personagem.isGoinRight = true;
                 }
             }
@@ -43,7 +44,13 @@ public class GameView extends SurfaceView implements Runnable {
                 personagem.isGoinRight = false;
             }
         });
+*/
+    }
 
+    public void right(View view){
+        if(view.getY() < screenY / 2){
+            personagem.isGoinRight = true;
+        }
     }
 
 
@@ -59,7 +66,9 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     private void update() {
+
     }
+
     private void draw() {
         if(getHolder().getSurface().isValid()){
             Canvas canvas = getHolder().lockCanvas();

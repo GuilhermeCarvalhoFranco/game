@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     //private Handler handler;
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     MediaPlayer mpSword;
     MediaPlayer mpTheme;
 
-    Button btnStart;
+    Button btnStart, btnLeft, btnRight;
     ImageButton btnMenu;
     ImageView imgSamurai;
 
@@ -42,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
         //handler = new Handler();
         btnStart = findViewById(R.id.btnStart);
         btnMenu = findViewById(R.id.btnMenu);
+        btnRight = findViewById(R.id.btnRight);
+        btnLeft = findViewById(R.id.btnLeft);
+
         imgSamurai = (ImageView) findViewById(R.id.imgSamurai);
 
 
@@ -63,6 +67,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 menuFlutuante();
+            }
+        });
+
+        btnRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gameView.right(view);
             }
         });
 
@@ -94,32 +105,6 @@ public class MainActivity extends AppCompatActivity {
         mpSword = MediaPlayer.create(this, R.raw.espada);
 
         mpSword.start();
-    }
-
-    public void start(){
-        isMenu = false;
-        wasStarted = true;
-
-        mpMenu.stop();
-
-        swordSound();
-
-        startGame();
-    }
-
-
-
-    public void startGame(){
-        btnStart.setVisibility(View.INVISIBLE);
-
-        themeSoundtrack();
-
-       /* Point point = new Point();
-        getWindowManager().getDefaultDisplay().getSize(point);
-        gameView = new GameView(this, point.x, point.y);
-
-        setContentView(gameView);*/
-
     }
 
 
@@ -160,6 +145,13 @@ public class MainActivity extends AppCompatActivity {
 
         themeSoundtrack();
         createSamurai();
+
+        Point point = new Point();
+        getWindowManager().getDefaultDisplay().getSize(point);
+        //gameView = new GameView(this, point.x, point.y);
+        gameView = new GameView(MainActivity.this, point.x, point.y);
+
+        //setContentView(gameView);
     }
 
     public void createSamurai(){
