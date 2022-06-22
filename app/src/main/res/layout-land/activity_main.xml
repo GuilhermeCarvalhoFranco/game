@@ -43,9 +43,9 @@
 
     <ImageView
         android:id="@+id/imgSamurai"
-        android:layout_width="66dp"
-        android:layout_height="90dp"
-        android:scaleType="centerCrop"
+        android:layout_width="75dp"
+        android:layout_height="96dp"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toTopOf="@+id/space"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.499"
@@ -84,5 +84,14 @@
         app:layout_constraintStart_toEndOf="@+id/btnLeft"
         app:layout_constraintTop_toTopOf="@+id/space"
         app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btnRight4"
+        android:layout_width="51dp"
+        android:layout_height="52dp"
+        android:layout_marginEnd="32dp"
+        app:icon="@drawable/ic_baseline_sports_mma_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgSamurai" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

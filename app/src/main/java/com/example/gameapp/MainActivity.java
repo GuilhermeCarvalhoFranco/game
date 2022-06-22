@@ -24,24 +24,13 @@ public class MainActivity extends AppCompatActivity {
     private Handler handler;
     private static final String TAG = "APP";
 
-    boolean isPlayingMenuTheme = false;
-    boolean isPlayingTheme = false;
-    boolean isPlayingSword = false;
-    boolean isAnimating = false;
     boolean isSave = true;
-    boolean isPressed = false;
-
-
     boolean wasStarted;
     boolean isMenu;
 
     float startPosition;
 
     ConstraintLayout cl;
-
-    //private ImageView viewBack = findViewById(R.id.imageView);
-    //View BackView = findViewById(R.id.imgBack);
-    //int largura = ;
 
     MediaPlayer mpMenu;
     MediaPlayer mpSword;
@@ -50,10 +39,6 @@ public class MainActivity extends AppCompatActivity {
     Button btnStart, btnLeft, btnRight;
     ImageButton btnMenu;
     ImageView imgSamurai;
-
-
-    GameView gameView;
-
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -94,8 +79,6 @@ public class MainActivity extends AppCompatActivity {
         btnRight.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                isPressed = true;
-
                 imgSamurai.setImageDrawable(getDrawable(R.drawable.list_corrida));
                 Animatable animation = (AnimationDrawable) imgSamurai.getDrawable();
                 animation.start();
@@ -116,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }).start();
-                
+
                 if(motionEvent.getAction() == MotionEvent.ACTION_UP){
                     imgSamurai.setImageDrawable(getDrawable(R.drawable.list_samurai));
                     Animatable anime = (AnimationDrawable) imgSamurai.getDrawable();
@@ -130,8 +113,6 @@ public class MainActivity extends AppCompatActivity {
         btnLeft.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                isPressed = true;
-
                 imgSamurai.setImageDrawable(getDrawable(R.drawable.list_corrida));
                 Animatable animation = (AnimationDrawable) imgSamurai.getDrawable();
                 animation.start();
@@ -263,13 +244,6 @@ public class MainActivity extends AppCompatActivity {
         themeSoundtrack();
         createSamurai();
         createButtons();
-
-        /*Point point = new Point();
-        getWindowManager().getDefaultDisplay().getSize(point);
-        gameView = new GameView(this, point.x, point.y);
-        gameView = new GameView(MainActivity.this, point.x, point.y);
-
-        setContentView(gameView);*/
     }
 
     public void createSamurai(){
