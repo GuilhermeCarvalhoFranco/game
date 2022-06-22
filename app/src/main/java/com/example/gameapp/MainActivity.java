@@ -2,12 +2,15 @@ package com.example.gameapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
     //private Handler handler;
@@ -23,12 +26,11 @@ public class MainActivity extends AppCompatActivity {
     MediaPlayer mpSword;
     MediaPlayer mpTheme;
 
-    Button btnStart, btnSair;
+    Button btnStart;
     ImageButton btnMenu;
+    ImageView imgSamurai;
 
-    FrameLayout frMenu;
 
-    int contMenu = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +39,10 @@ public class MainActivity extends AppCompatActivity {
         //handler = new Handler();
         btnStart = findViewById(R.id.btnStart);
         btnMenu = findViewById(R.id.btnMenu);
-        btnSair = findViewById(R.id.btnSair);
-        frMenu = findViewById(R.id.frameMenu);
+        imgSamurai = (ImageView) findViewById(R.id.imgSamurai);
 
-        frMenu.setVisibility(View.INVISIBLE);
+
+
 
 
         layoutLandscape();
@@ -61,24 +63,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnSair.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isMenu){
-                    mpMenu.stop();
-                }
-
-                if(wasStarted){
-                    mpTheme.stop();
-                }
-
-                menu();
-
-                contMenu = 0;
-                frMenu.setVisibility(View.INVISIBLE);
-                btnStart.setVisibility(View.VISIBLE);
-            }
-        });
     }
 
     public void layoutLandscape(){
@@ -89,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
     public void menu(){
         isMenu = true;
         wasStarted = false;
+        
+        imgSamurai.setVisibility(View.INVISIBLE);
 
 
         menuSoundtrack();
@@ -107,27 +93,6 @@ public class MainActivity extends AppCompatActivity {
         mpSword.start();
     }
 
-    public void start(){
-        isMenu = false;
-        wasStarted = true;
-
-        mpMenu.stop();
-
-        swordSound();
-
-        startGame();
-    }
-
-
-
-    public void startGame(){
-        btnStart.setVisibility(View.INVISIBLE);
-
-        themeSoundtrack();
-
-    }
-
-
     public void themeSoundtrack(){
         mpTheme = MediaPlayer.create(this, R.raw.theme);
 
@@ -139,31 +104,40 @@ public class MainActivity extends AppCompatActivity {
         swordSound();
 
         if(isMenu) {
-            if (contMenu == 0) {
-                frMenu.setVisibility(View.VISIBLE);
-
-                btnStart.setVisibility(View.INVISIBLE);
-
-                contMenu = 1;
-            } else {
-                frMenu.setVisibility(View.INVISIBLE);
-
-                btnStart.setVisibility(View.VISIBLE);
-
-                contMenu = 0;
-            }
+            mpMenu.stop();
         }else{
-            if (contMenu == 0) {
-                frMenu.setVisibility(View.VISIBLE);
-
-                contMenu = 1;
-            } else {
-                frMenu.setVisibility(View.INVISIBLE);
-
-                contMenu = 0;
-            }
+            mpTheme.stop();
+            btnStart.setVisibility(View.VISIBLE);
         }
 
+        menu();
+        layoutLandscape();
+    }
+
+    public void start(){
+        isMenu = false;
+        wasStarted = true;
+
+        mpMenu.stop();
+
+        swordSound();
+
+        startGame();
+    }
+
+    public void startGame(){
+        btnStart.setVisibility(View.INVISIBLE);
+
+        themeSoundtrack();
+        createSamurai();
+    }
+
+    public void createSamurai(){
+        imgSamurai.setVisibility(View.VISIBLE);
+
+        Animatable animation = (AnimationDrawable) imgSamurai.getDrawable();
+        animation.start();
     }
 
 }
+
