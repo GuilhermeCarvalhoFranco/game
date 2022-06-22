@@ -2,11 +2,13 @@ package com.example.gameapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     GameView gameView;
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
         btnLeft = findViewById(R.id.btnLeft);
 
         imgSamurai = (ImageView) findViewById(R.id.imgSamurai);
-
-
 
 
 
@@ -70,14 +71,61 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnRight.setOnClickListener(new View.OnClickListener() {
+        btnRight.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
-                gameView.right(view);
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        while(btnRight.isPressed()){
+                            moveToRight();
+
+                            try {
+                                Thread.sleep(200);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }).start();
+                return false;
             }
         });
 
+        btnLeft.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        while(btnLeft.isPressed()){
+                            moveToLeft();
+
+                            try {
+                                Thread.sleep(200);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }).start();
+                return false;
+            }
+        });
     }
+
+    public void moveToLeft(){
+            float x = imgSamurai.getX();
+            x = x-50;
+            imgSamurai.setX(x);
+    }
+
+    public void moveToRight(){
+        float x = imgSamurai.getX();
+        x = x+50;
+        imgSamurai.setX(x);
+    }
+
 
     public void layoutLandscape(){
         View decorView = getWindow().getDecorView();
@@ -89,6 +137,8 @@ public class MainActivity extends AppCompatActivity {
         wasStarted = false;
         
         imgSamurai.setVisibility(View.INVISIBLE);
+        btnRight.setVisibility(View.INVISIBLE);
+        btnLeft.setVisibility(View.INVISIBLE);
 
 
         menuSoundtrack();
@@ -106,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
 
         mpSword.start();
     }
-
 
     public void themeSoundtrack(){
         mpTheme = MediaPlayer.create(this, R.raw.theme);
@@ -145,13 +194,14 @@ public class MainActivity extends AppCompatActivity {
 
         themeSoundtrack();
         createSamurai();
+        createButtons();
 
-        Point point = new Point();
+        /*Point point = new Point();
         getWindowManager().getDefaultDisplay().getSize(point);
-        //gameView = new GameView(this, point.x, point.y);
+        gameView = new GameView(this, point.x, point.y);
         gameView = new GameView(MainActivity.this, point.x, point.y);
 
-        //setContentView(gameView);
+        setContentView(gameView);*/
     }
 
     public void createSamurai(){
@@ -159,6 +209,11 @@ public class MainActivity extends AppCompatActivity {
 
         Animatable animation = (AnimationDrawable) imgSamurai.getDrawable();
         animation.start();
+    }
+
+    public void createButtons(){
+        btnRight.setVisibility(View.VISIBLE);
+        btnLeft.setVisibility(View.VISIBLE);
     }
 
 }
