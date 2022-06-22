@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     boolean wasStarted;
     boolean isMenu;
 
+    float startPosition;
+
     ConstraintLayout cl;
 
     //private ImageView viewBack = findViewById(R.id.imageView);
@@ -93,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
                 Animatable animation = (AnimationDrawable) imgSamurai.getDrawable();
                 animation.start();
 
+                imgSamurai.setRotationY(0);
+
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -117,6 +121,8 @@ public class MainActivity extends AppCompatActivity {
                 imgSamurai.setImageDrawable(getDrawable(R.drawable.list_corrida));
                 Animatable animation = (AnimationDrawable) imgSamurai.getDrawable();
                 animation.start();
+
+                imgSamurai.setRotationY(180);
 
                 new Thread(new Runnable() {
                     @Override
@@ -229,6 +235,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startGame(){
+        startPosition = imgSamurai.getX();
+
         btnStart.setVisibility(View.INVISIBLE);
 
         themeSoundtrack();
@@ -244,6 +252,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createSamurai(){
+        imgSamurai.setX(startPosition);
         imgSamurai.setVisibility(View.VISIBLE);
         imgSamurai.setImageDrawable(getDrawable(R.drawable.list_samurai));
 
