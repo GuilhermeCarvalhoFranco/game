@@ -15,7 +15,7 @@ public class Personagem {
 
     Personagem(int screenX, Resources res){
         idle = BitmapFactory.decodeResource(res, R.drawable.iidle);
-        run = BitmapFactory.decodeResource(res, R.drawable.run);
+       // run = BitmapFactory.decodeResource(res, R.drawable.run);
 
         width = idle.getWidth();
         height = idle.getHeight();

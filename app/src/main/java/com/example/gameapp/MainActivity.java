@@ -23,8 +23,13 @@ public class MainActivity extends AppCompatActivity {
     boolean isPlayingTheme = false;
     boolean isPlayingSword = false;
 
+
     boolean wasStarted;
     boolean isMenu;
+
+    //private ImageView viewBack = findViewById(R.id.imageView);
+    //View BackView = findViewById(R.id.imgBack);
+    //int largura = ;
 
     MediaPlayer mpMenu;
     MediaPlayer mpSword;
@@ -117,13 +122,28 @@ public class MainActivity extends AppCompatActivity {
     public void moveToLeft(){
             float x = imgSamurai.getX();
             x = x-50;
-            imgSamurai.setX(x);
+
+            if(x < 0){
+                x = 0;
+                imgSamurai.setX(x);
+            }else{
+                imgSamurai.setX(x);
+            }
+
     }
 
     public void moveToRight(){
         float x = imgSamurai.getX();
         x = x+50;
-        imgSamurai.setX(x);
+      /*  if(x > largura){
+            x = largura;
+            imgSamurai.setX(x);
+        }else{
+            imgSamurai.setX(x);
+        }
+        
+       */
+
     }
 
 
