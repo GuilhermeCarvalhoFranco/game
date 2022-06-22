@@ -2,6 +2,7 @@ package com.example.gameapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -27,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     ImageButton btnMenu;
 
     FrameLayout frMenu;
+
+    GameView gameView;
 
     int contMenu = 0;
 
@@ -79,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 btnStart.setVisibility(View.VISIBLE);
             }
         });
+
     }
 
     public void layoutLandscape(){
@@ -124,6 +128,12 @@ public class MainActivity extends AppCompatActivity {
         btnStart.setVisibility(View.INVISIBLE);
 
         themeSoundtrack();
+
+       /* Point point = new Point();
+        getWindowManager().getDefaultDisplay().getSize(point);
+        gameView = new GameView(this, point.x, point.y);
+
+        setContentView(gameView);*/
 
     }
 
