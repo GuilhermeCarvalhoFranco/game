@@ -1,13 +1,17 @@
 package com.example.gameapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.Point;
 import android.media.MediaPlayer;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -17,15 +21,19 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    //private Handler handler;
+    private Handler handler;
+    private static final String TAG = "APP";
 
     boolean isPlayingMenuTheme = false;
     boolean isPlayingTheme = false;
     boolean isPlayingSword = false;
+    boolean isAnimating = false;
 
 
     boolean wasStarted;
     boolean isMenu;
+
+    ConstraintLayout cl;
 
     //private ImageView viewBack = findViewById(R.id.imageView);
     //View BackView = findViewById(R.id.imgBack);
@@ -48,13 +56,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //handler = new Handler();
+        handler = new Handler();
         btnStart = findViewById(R.id.btnStart);
         btnMenu = findViewById(R.id.btnMenu);
         btnRight = findViewById(R.id.btnRight);
         btnLeft = findViewById(R.id.btnLeft);
 
         imgSamurai = (ImageView) findViewById(R.id.imgSamurai);
+
+        cl = findViewById(R.id.clGame);
 
 
 
@@ -79,6 +89,10 @@ public class MainActivity extends AppCompatActivity {
         btnRight.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                imgSamurai.setImageDrawable(getDrawable(R.drawable.list_corrida));
+                Animatable animation = (AnimationDrawable) imgSamurai.getDrawable();
+                animation.start();
+
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -86,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                             moveToRight();
 
                             try {
-                                Thread.sleep(200);
+                                Thread.sleep(70);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
@@ -100,6 +114,10 @@ public class MainActivity extends AppCompatActivity {
         btnLeft.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                imgSamurai.setImageDrawable(getDrawable(R.drawable.list_corrida));
+                Animatable animation = (AnimationDrawable) imgSamurai.getDrawable();
+                animation.start();
+
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -107,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                             moveToLeft();
 
                             try {
-                                Thread.sleep(200);
+                                Thread.sleep(70);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
@@ -121,7 +139,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void moveToLeft(){
             float x = imgSamurai.getX();
-            x = x-50;
+            x = x-25;
+
 
             if(x < 0){
                 x = 0;
@@ -134,16 +153,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void moveToRight(){
         float x = imgSamurai.getX();
-        x = x+50;
-      /*  if(x > largura){
+        x = x+25;
+
+        int largura = cl.getWidth() - 200;
+
+        if(x > largura){
             x = largura;
             imgSamurai.setX(x);
         }else{
             imgSamurai.setX(x);
         }
-        
-       */
-
     }
 
 
@@ -226,6 +245,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void createSamurai(){
         imgSamurai.setVisibility(View.VISIBLE);
+        imgSamurai.setImageDrawable(getDrawable(R.drawable.list_samurai));
 
         Animatable animation = (AnimationDrawable) imgSamurai.getDrawable();
         animation.start();
