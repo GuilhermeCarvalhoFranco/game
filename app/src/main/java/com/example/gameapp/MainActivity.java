@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     ImageButton btnMenu;
     ImageView imgSamurai;
 
+
+    GameView gameView;
 
 
     @Override
@@ -92,6 +95,33 @@ public class MainActivity extends AppCompatActivity {
 
         mpSword.start();
     }
+
+    public void start(){
+        isMenu = false;
+        wasStarted = true;
+
+        mpMenu.stop();
+
+        swordSound();
+
+        startGame();
+    }
+
+
+
+    public void startGame(){
+        btnStart.setVisibility(View.INVISIBLE);
+
+        themeSoundtrack();
+
+       /* Point point = new Point();
+        getWindowManager().getDefaultDisplay().getSize(point);
+        gameView = new GameView(this, point.x, point.y);
+
+        setContentView(gameView);*/
+
+    }
+
 
     public void themeSoundtrack(){
         mpTheme = MediaPlayer.create(this, R.raw.theme);
