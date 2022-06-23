@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Guilherme/Documents/GitHub/game/app/src/main/res/drawable/ic_baseline_sports_mma_24.xml" value="0.3828125" />
+        <entry key="..\:/Users/Guilherme/Documents/GitHub/game/app/src/main/res/drawable/list_attack_end.xml" value="0.3828125" />
+        <entry key="..\:/Users/Guilherme/Documents/GitHub/game/app/src/main/res/drawable/list_attack_start.xml" value="0.3828125" />
         <entry key="..\:/Users/Guilherme/Documents/GitHub/game/app/src/main/res/drawable/list_corrida.xml" value="0.3828125" />
         <entry key="..\:/Users/Guilherme/Documents/GitHub/game/app/src/main/res/drawable/list_loading.xml" value="0.3828125" />
         <entry key="..\:/Users/Guilherme/Documents/GitHub/game/app/src/main/res/drawable/list_samurai.xml" value="0.1" />
@@ -11,6 +14,12 @@
         <entry key="..\:/Users/Guilherme/Documents/GitHub/game/app/src/main/res/layout/activity_main.xml" value="0.25905797101449274" />
         <entry key="..\:/Users/Luiz Fernando/Documents/EstudosSites/APA/ordenacaoJS/game/app/src/main/res/layout-land/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/Luiz Fernando/Documents/EstudosSites/APA/ordenacaoJS/game/app/src/main/res/layout/activity_main.xml" value="0.11594202898550725" />
+        <entry key="app/src/main/res/drawable/list_attack.xml" value="0.19" />
+        <entry key="app/src/main/res/drawable/list_attack_start.xml" value="0.2845" />
+        <entry key="app/src/main/res/drawable/list_corrida.xml" value="0.2845" />
+        <entry key="app/src/main/res/drawable/list_samurai.xml" value="0.2845" />
+        <entry key="app/src/main/res/layout-land/activity_main.xml" value="0.30158730158730157" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.30932971014492755" />
       </map>
     </option>
   </component>

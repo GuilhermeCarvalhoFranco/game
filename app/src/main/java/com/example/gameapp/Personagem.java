@@ -13,7 +13,7 @@ public class Personagem {
     int x, y, width, height, countPath = 0;
     Bitmap run, idle;
 
-    Personagem(int screenX, Resources res){
+    Personagem(int screenX){
         //idle = BitmapFactory.decodeResource(res, R.drawable.iidle);
         //run = BitmapFactory.decodeResource(res, R.drawable.run);
 
@@ -41,5 +41,9 @@ public class Personagem {
         countPath--;
 
         return run;
+    }
+
+    public void teste() {
+
     }
 }

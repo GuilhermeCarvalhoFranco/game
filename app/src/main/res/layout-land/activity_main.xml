@@ -43,9 +43,9 @@
 
     <ImageView
         android:id="@+id/imgSamurai"
-        android:layout_width="75dp"
+        android:layout_width="140dp"
         android:layout_height="96dp"
-        android:scaleType="fitXY"
+        android:scaleType="fitStart"
         app:layout_constraintBottom_toTopOf="@+id/space"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.499"
@@ -86,7 +86,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/btnRight4"
+        android:id="@+id/btnAtack"
         android:layout_width="51dp"
         android:layout_height="52dp"
         android:layout_marginEnd="32dp"

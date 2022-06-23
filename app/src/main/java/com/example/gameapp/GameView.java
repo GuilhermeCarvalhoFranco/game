@@ -27,7 +27,7 @@ public class GameView extends SurfaceView  implements Runnable {
         screenRatioX = 1920f / screenX;
         screenRatioY = 1080f / screenY;
 
-        personagem = new Personagem(screenX, getResources());
+        personagem = new Personagem(screenX);
 /*
         btnR.setOnClickListener(new View.OnClickListener(){
             @Override
