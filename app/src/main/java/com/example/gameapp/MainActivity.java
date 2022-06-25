@@ -21,21 +21,20 @@ public class MainActivity extends AppCompatActivity {
     private Handler handler;
     private static final String TAG = "APP";
     public final static int MOVE_LEFT = 0, MOVE_RIGHT = 1;
-    private boolean action;
+    public final static int ORI_LEFT = 180, ORI_RIGHT = 0;
 
-    boolean isSave = true;
+    boolean action;
     boolean wasStarted;
     boolean isMenu;
     boolean atk;
+    boolean savePosition = false;
 
-
-    float startPosition;
+    int startPosition;
 
     ConstraintLayout cl;
 
     MediaPlayer mpMenu;
-    MediaPlayer mpSword;
-    MediaPlayer mpTheme;
+    MediaPlayer mpGame;
 
     Button btnStart, btnLeft, btnRight, btnAtack;
     ImageButton btnMenu;
@@ -47,6 +46,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Animation anima = new Animation();
+        anima.MyClass(MainActivity.this);
+
+        Sound music = new Sound();
+        music.MyClass(MainActivity.this);
+
         handler = new Handler();
         btnStart = findViewById(R.id.btnStart);
         btnMenu = findViewById(R.id.btnMenu);
@@ -57,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
         imgSamurai = (ImageView) findViewById(R.id.imgSamurai);
 
         cl = findViewById(R.id.clGame);
-
 
         layoutLandscape();
 
@@ -76,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                start();
+                startGame();
             }
         });
 
@@ -90,31 +94,12 @@ public class MainActivity extends AppCompatActivity {
         btnRight.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-
                 if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    imgSamurai.setImageDrawable(getDrawable(R.drawable.list_corrida));
-                    Animatable animation = (AnimationDrawable) imgSamurai.getDrawable();
-                    animation.start();
-
-                    params.width = 280;
-                    params.height = 192;
-
-                    Log.d(TAG, "onTouch: "+imgSamurai.getWidth()+"|"+imgSamurai.getHeight());
-                    imgSamurai.setScaleType(ImageView.ScaleType.FIT_START);
-                    imgSamurai.setLayoutParams(params);
-
-                    imgSamurai.setRotationY(0);
+                    anima.samuraiRunAnimation(imgSamurai, ORI_RIGHT);
                 }
 
                 else if(motionEvent.getAction() == MotionEvent.ACTION_UP){
-                    imgSamurai.setImageDrawable(getDrawable(R.drawable.list_samurai));
-                    Animatable anime = (AnimationDrawable) imgSamurai.getDrawable();
-                    anime.start();
-
-                    params.width = 280;
-                    params.height = 192;
-                    imgSamurai.setScaleType(ImageView.ScaleType.FIT_START);
-                    imgSamurai.setLayoutParams(params);
+                    anima.samuraiIdleAnimation(imgSamurai);
                 }
 
                 return false;
@@ -125,33 +110,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    imgSamurai.setImageDrawable(getDrawable(R.drawable.list_corrida));
-                    Animatable animation = (AnimationDrawable) imgSamurai.getDrawable();
-                    animation.start();
-
-
-                    params.width = 280;
-                    params.height = 192;
-
-                    Log.d(TAG, "onTouch: "+imgSamurai.getWidth()+"|"+imgSamurai.getHeight());
-                    imgSamurai.setScaleType(ImageView.ScaleType.FIT_START);
-                    imgSamurai.setLayoutParams(params);
-
-                    imgSamurai.setRotationY(180);
+                    anima.samuraiRunAnimation(imgSamurai, ORI_LEFT);
                 }
 
                 else if(motionEvent.getAction() == MotionEvent.ACTION_UP){
-                    imgSamurai.setImageDrawable(getDrawable(R.drawable.list_samurai));
-                    Animatable anime = (AnimationDrawable) imgSamurai.getDrawable();
-                    anime.start();
-
-
-                    params.width = 280;
-                    params.height = 192;
-
-                    Log.d(TAG, "onTouch: "+imgSamurai.getWidth()+"|"+imgSamurai.getHeight());
-                    imgSamurai.setScaleType(ImageView.ScaleType.FIT_START);
-                    imgSamurai.setLayoutParams(params);
+                    anima.samuraiIdleAnimation(imgSamurai);
                 }
 
                 return false;
@@ -162,55 +125,40 @@ public class MainActivity extends AppCompatActivity {
         verifica();
     }
 
-    public void attack(){
+    private void attack(){
+        Animation anima = new Animation();
+        anima.MyClass(MainActivity.this);
+
         if(atk){
-            imgSamurai.setImageDrawable(getDrawable(R.drawable.list_attack_start));
-            Animatable anime = (AnimationDrawable) imgSamurai.getDrawable();
-            anime.start();
+            atk = false;
+
+            anima.samuraiAttackStartAnimation(imgSamurai);
 
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) imgSamurai.getLayoutParams();
-                    params.width = 350;
-                    params.height = 280;
-                    imgSamurai.setLayoutParams(params);
-
-                    imgSamurai.setScaleType(ImageView.ScaleType.FIT_XY);
-
-                    imgSamurai.setImageDrawable(getDrawable(R.drawable.list_attack_end));
-                    Animatable anime = (AnimationDrawable) imgSamurai.getDrawable();
-                    anime.start();
+                    anima.samuraiAttackEndAnimation(imgSamurai);
                 }
-            }, 200);
+            }, 250);
 
-            atk = false;
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if(btnLeft.isPressed() || btnRight.isPressed()){
+                        if(btnLeft.isPressed()){
+                            anima.samuraiRunAnimation(imgSamurai, ORI_LEFT);
+                        }else{
+                            anima.samuraiRunAnimation(imgSamurai, ORI_RIGHT);
+                        }
+                    }else{
+                        anima.samuraiIdleAnimation(imgSamurai);
+                    }
+                }
+            }, 400);
         }
-
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) imgSamurai.getLayoutParams();
-                params.width = 280;
-                params.height = 192;
-
-                imgSamurai.setScaleType(ImageView.ScaleType.FIT_START);
-                imgSamurai.setLayoutParams(params);
-
-                if(btnLeft.isPressed() || btnRight.isPressed()){
-                    imgSamurai.setImageDrawable(getDrawable(R.drawable.list_corrida));
-                    Animatable animation = (AnimationDrawable) imgSamurai.getDrawable();
-                    animation.start();
-                }else{
-                    imgSamurai.setImageDrawable(getDrawable(R.drawable.list_samurai));
-                    Animatable anime = (AnimationDrawable) imgSamurai.getDrawable();
-                    anime.start();
-                }
-            }
-        }, 400);
     }
 
-    public void verifica() {
+    private void verifica() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -219,7 +167,6 @@ public class MainActivity extends AppCompatActivity {
                         move(MOVE_LEFT);
                     else if(btnRight.isPressed())
                         move(MOVE_RIGHT);
-
                     try {
                         Thread.sleep(70);
                     } catch (InterruptedException e) {
@@ -230,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
         }).start();
     }
 
-    public void move(int direction) {
+    private void move(int direction) {
         float inc = 25;
         if(direction == MOVE_LEFT)
             inc *= -1;
@@ -248,100 +195,100 @@ public class MainActivity extends AppCompatActivity {
         imgSamurai.setX(x);
     }
 
-    public void layoutLandscape(){
+    private void layoutLandscape(){
         View decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 
-    public void menu(){
+    private void menu(){
         isMenu = true;
         wasStarted = false;
-        
-        imgSamurai.setVisibility(View.INVISIBLE);
-        btnRight.setVisibility(View.INVISIBLE);
-        btnLeft.setVisibility(View.INVISIBLE);
-        btnAtack.setVisibility(View.INVISIBLE);
 
-
-        menuSoundtrack();
+        menuMusic();
+        hideGame();
     }
 
-    public void menuSoundtrack(){
-        mpMenu = MediaPlayer.create(this, R.raw.menu);
-
-        mpMenu.setLooping(isMenu);
-        mpMenu.start();
-    }
-
-    public void swordSound(){
-        mpSword = MediaPlayer.create(this, R.raw.espada);
-
-        mpSword.start();
-    }
-
-    public void themeSoundtrack(){
-        mpTheme = MediaPlayer.create(this, R.raw.theme);
-
-        mpTheme.setLooping(wasStarted);
-        mpTheme.start();
-    }
-
-    public void menuFlutuante(){
+    private void menuFlutuante(){
         swordSound();
 
         if(isMenu) {
             mpMenu.stop();
         }else{
-            mpTheme.stop();
+            mpGame.stop();
             btnStart.setVisibility(View.VISIBLE);
         }
-
-        imgSamurai.setX(startPosition);
 
         menu();
         layoutLandscape();
     }
 
-    public void start(){
+    private void swordSound(){
+        Sound music = new Sound();
+        music.MyClass(MainActivity.this);
+
+        music.swordSound();
+    }
+
+    private void startGame(){
         isMenu = false;
         wasStarted = true;
 
-        mpMenu.stop();
-
         swordSound();
-
-        startGame();
+        showGame();
+        gameMusic();
     }
 
-    public void startGame(){
+    private void hideGame(){
+        imgSamurai.setVisibility(View.INVISIBLE);
+        btnRight.setVisibility(View.INVISIBLE);
+        btnLeft.setVisibility(View.INVISIBLE);
+        btnAtack.setVisibility(View.INVISIBLE);
+    }
+
+    private void showGame(){
         btnStart.setVisibility(View.INVISIBLE);
 
-        themeSoundtrack();
-        createSamurai();
-        createButtons();
+        showSamurai();
+        showButtons();
     }
 
-    public void createSamurai(){
+    private void showSamurai(){
         imgSamurai.setVisibility(View.VISIBLE);
-        imgSamurai.setImageDrawable(getDrawable(R.drawable.list_samurai));
+        imgSamurai.setRotationX(ORI_RIGHT);
 
-        Animatable animation = (AnimationDrawable) imgSamurai.getDrawable();
-        animation.start();
+        Animation anima = new Animation();
+        anima.MyClass(MainActivity.this);
 
-        if(isSave){
-            startPosition = imgSamurai.getX();
-
-            isSave = false;
+        anima.samuraiIdleAnimation(imgSamurai);
+        if(!savePosition){
+            startPosition = (cl.getWidth() - 100) /2;
+            savePosition = true;
         }else{
             imgSamurai.setX(startPosition);
         }
     }
 
-    public void createButtons(){
+    private void showButtons(){
         btnRight.setVisibility(View.VISIBLE);
         btnLeft.setVisibility(View.VISIBLE);
         btnAtack.setVisibility(View.VISIBLE);
     }
 
-}
+    private void menuMusic(){
+        Sound music = new Sound();
+        music.MyClass(MainActivity.this);
 
+        mpMenu = music.musicMenuGame(isMenu, wasStarted);
+        mpMenu.start();
+    }
+
+    private void gameMusic(){
+        Sound music = new Sound();
+        music.MyClass(MainActivity.this);
+
+        mpMenu.stop();
+
+        mpGame = music.musicMenuGame(isMenu, wasStarted);
+        mpGame.start();
+    }
+}

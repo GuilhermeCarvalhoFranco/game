@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/atack11"  android:duration="150"/>
-    <item android:drawable="@drawable/atack12" android:duration="150"/>
-    <item android:drawable="@drawable/atack13"  android:duration="150"/>
-    <item android:drawable="@drawable/atack14"  android:duration="150"/>
+    <item android:drawable="@drawable/atack11"  android:duration="75"/>
+    <item android:drawable="@drawable/atack12" android:duration="75"/>
+    <item android:drawable="@drawable/atack13"  android:duration="75"/>
+    <item android:drawable="@drawable/atack14"  android:duration="75"/>
 </animation-list>
