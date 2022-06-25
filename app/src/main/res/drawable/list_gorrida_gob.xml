@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/grun1"  android:duration="100"/>
+    <item android:drawable="@drawable/grun2"  android:duration="100"/>
+    <item android:drawable="@drawable/grun3"  android:duration="100"/>
+    <item android:drawable="@drawable/grun4"  android:duration="100"/>
+    <item android:drawable="@drawable/grun5"  android:duration="100"/>
+    <item android:drawable="@drawable/grun6"  android:duration="100"/>
+    <item android:drawable="@drawable/grun7"  android:duration="100"/>
+    <item android:drawable="@drawable/grun8"  android:duration="100"/>
+</animation-list>

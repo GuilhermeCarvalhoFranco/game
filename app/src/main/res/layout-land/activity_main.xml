@@ -94,4 +94,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgSamurai" />
 
+    <ImageView
+        android:id="@+id/imgGoblin"
+        android:layout_width="75dp"
+        android:layout_height="76dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgSamurai"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.022"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/list_gorrida_gob" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

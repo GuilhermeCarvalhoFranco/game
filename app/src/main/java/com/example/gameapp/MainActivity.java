@@ -6,6 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.annotation.SuppressLint;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnStart, btnLeft, btnRight, btnAtack;
     ImageButton btnMenu;
-    ImageView imgSamurai;
+    ImageView imgSamurai, imgGoblin;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         btnAtack = findViewById(R.id.btnAtack);
 
         imgSamurai = (ImageView) findViewById(R.id.imgSamurai);
+        imgGoblin = (ImageView) findViewById(R.id.imgGoblin);
 
         cl = findViewById(R.id.clGame);
 
@@ -123,6 +125,10 @@ public class MainActivity extends AppCompatActivity {
 
         action = false;
         verifica();
+
+        imgGoblin.setImageDrawable(getDrawable(R.drawable.list_gorrida_gob));
+        Animatable animation = (AnimationDrawable) imgGoblin.getDrawable();
+        animation.start();
     }
 
     private void attack(){
