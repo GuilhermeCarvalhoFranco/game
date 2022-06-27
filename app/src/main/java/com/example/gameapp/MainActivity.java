@@ -41,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
     ImageButton btnMenu;
     ImageView imgSamurai, imgGoblin;
 
+    int spc = 15;
+    int dist = 1;
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -242,6 +245,7 @@ public class MainActivity extends AppCompatActivity {
         swordSound();
         showGame();
         gameMusic();
+        surgiInimigo();
     }
 
     private void hideGame(){
@@ -296,5 +300,33 @@ public class MainActivity extends AppCompatActivity {
 
         mpGame = music.musicMenuGame(isMenu, wasStarted);
         mpGame.start();
+    }
+
+    public void surgiInimigo(){
+
+        imgGoblin.setImageDrawable(getDrawable(R.drawable.list_gorrida_gob));
+        imgGoblin.setRotationY(180);
+        Animatable animation = (AnimationDrawable) imgGoblin.getDrawable();
+
+        animation.start();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (dist > 0) {
+
+                    dist = cl.getWidth() - 115 - spc;
+                    imgGoblin.setX(dist);
+                    spc = spc + 15;
+
+                    try {
+                        Thread.sleep(70);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+
     }
 }
