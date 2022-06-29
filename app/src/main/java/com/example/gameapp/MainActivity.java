@@ -18,6 +18,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity {
     private Handler handler;
     private static final String TAG = "APP";
@@ -31,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     boolean savePosition = false;
 
     int startPosition;
+    int spc = 15;
+    int dist = 1;
+    float ini = -150;
 
     ConstraintLayout cl;
 
@@ -41,8 +46,7 @@ public class MainActivity extends AppCompatActivity {
     ImageButton btnMenu;
     ImageView imgSamurai, imgGoblin;
 
-    int spc = 15;
-    int dist = 1;
+
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -55,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
 
         Sound music = new Sound();
         music.MyClass(MainActivity.this);
+
+        Goblin gob = new Goblin();
+        gob.MyClass(MainActivity.this);
 
         handler = new Handler();
         btnStart = findViewById(R.id.btnStart);
@@ -79,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 atk = true;
                 attack();
+
+                music.swordSound();
+                Log.d(TAG, "goblin"+ imgGoblin.getX());
             }
         });
 
@@ -128,10 +138,8 @@ public class MainActivity extends AppCompatActivity {
 
         action = false;
         verifica();
+        //surgiInimigo();
 
-        imgGoblin.setImageDrawable(getDrawable(R.drawable.list_gorrida_gob));
-        Animatable animation = (AnimationDrawable) imgGoblin.getDrawable();
-        animation.start();
     }
 
     private void attack(){
@@ -169,7 +177,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void verifica() {
         new Thread(new Runnable() {
-            @Override
             public void run() {
                 while (true) {
                     if(btnLeft.isPressed())
@@ -303,22 +310,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void surgiInimigo(){
-
+        //Goblin gob = new Goblin();
         imgGoblin.setImageDrawable(getDrawable(R.drawable.list_gorrida_gob));
-        imgGoblin.setRotationY(180);
         Animatable animation = (AnimationDrawable) imgGoblin.getDrawable();
-
         animation.start();
 
+
+
         new Thread(new Runnable() {
-            @Override
             public void run() {
-                while (dist > 0) {
-
+                while (true) {
                     dist = cl.getWidth() - 115 - spc;
-                    imgGoblin.setX(dist);
-                    spc = spc + 15;
-
+                    if(dist > -150){
+                        dist = cl.getWidth() - 115 - spc;
+                        imgGoblin.setX(dist);
+                        spc = spc + 15;
+                        Log.d(TAG, "dist: "+ dist);
+                    }else{
+                        while(ini < 1400){
+                            ini = - 115 - spc;;
+                            imgGoblin.setX(ini);
+                            spc += 15;
+                            Log.d(TAG, "volta: "+ dist);
+                        }
+                    }
                     try {
                         Thread.sleep(70);
                     } catch (InterruptedException e) {
@@ -327,6 +342,5 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }).start();
-
     }
 }
